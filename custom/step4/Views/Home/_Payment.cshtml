@@ -1,0 +1,45 @@
+<h1 class="cover-heading">Limited Offer Sale !!</h1>
+<p class="lead">Purchase a random superhero to run your errands. Try your luck.</p>
+<p class="lead">
+  <input type="button" class="btn btn-lg btn-default" id="submit-btn" value="Pay with Payabbhi"/>
+  <script src="https://checkout.payabbhi.com/v1/checkout.js"></script>
+  <form name='payabbhiform' action="/status" method="POST">
+      <input type="hidden" name="merchant_order_id" value=@ViewData["merchant_order_id"]> </input>
+        <input type="hidden" name="order_id" id="order_id">
+      <input type="hidden" name="payment_id" id="payment_id">
+      <input type="hidden" name="payment_signature"  id="payment_signature" >
+  </form>
+  <script>
+  var options = {
+      "access_id": "@ViewData["access_id"]",
+      "order_id":  "@ViewData["OrderID"]",
+      "amount": @ViewData["Amount"],
+      "name": "SuperHeroes Store",
+      "description": "Order @ViewData["merchant_order_id"]",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrqxgvtb3CZ9MJOKpXWxrScQEK4lwzbClXg_J7iayii4PTg-Y5",
+      "prefill": {
+          "name":    "Bruce Wayne",
+          "email":   "bruce@wayneinc.com",
+          "contact": "9999999999"
+      },
+      "notes": {
+          "merchant_order_id": "@ViewData["merchant_order_id"]"
+      },
+      "theme": {
+          "color": "#F6A821"
+      }
+  };
+  options.handler = function (response){
+      // Submitting the Payment response as outlined at https://payabbhi.com/docs/checkout
+      document.getElementById('order_id').value = response.order_id;
+      document.getElementById('payment_id').value = response.payment_id;
+      document.getElementById('payment_signature').value = response.payment_signature;
+      document.payabbhiform.submit();
+  };
+  document.getElementById('submit-btn').onclick = function(e){
+      var payabbhi = new Payabbhi(options);
+      payabbhi.open();
+      e.preventDefault();
+  }
+</script>
+</p>

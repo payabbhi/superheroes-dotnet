@@ -1,0 +1,29 @@
+﻿<html lang="en">
+	﻿<head>
+	  @RenderPage("_Header.cshtml")
+	</head>
+
+	<body>
+	<div class="site-wrapper">
+	  <div class="site-wrapper-inner">
+	    <div class="cover-container">
+
+	      @RenderPage("_Navbar.cshtml")
+
+	      <div class="inner cover">
+	      @if ((object)@ViewData["error"] == null)
+	      {
+	        @RenderPage("_Payment.cshtml")
+	      }
+	      else
+	      {
+	        @RenderPage("_Error.cshtml")
+	      }
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	@RenderPage("_Footer.cshtml")
+	</body>
+</html>
